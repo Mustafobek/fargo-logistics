@@ -24,7 +24,11 @@ const schema = new mongoose.Schema({
     birthday: String,
     passportSerial: String,
     passportNumber: String,
-    address: String
+    address: String,
+    deleted: {
+        type: Boolean,
+        default: false
+    }
 })
 
 export const User = mongoose.model('users', schema)

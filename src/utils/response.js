@@ -12,3 +12,17 @@ export const successRes = (res, code, data) => {
         data
     })
 }
+
+export const notFound = (res) => {
+    return res.status(404).json({
+        success: false,
+        message: 'Not found'
+    })
+}
+
+export const conflict = res => {
+    return res.status(409).json({
+        success: false,
+        message: 'Conflict models'
+    })
+}

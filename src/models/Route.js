@@ -12,7 +12,11 @@ const schema = new mongoose.Schema({
             type: Number,
             required: true
         }
-    }]
+    }],
+    deleted: {
+        type: Boolean,
+        default: false
+    }
 })
 
 export const Route = mongoose.model('routes', schema)

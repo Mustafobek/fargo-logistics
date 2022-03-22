@@ -5,6 +5,7 @@ import './db/mongoose.js'
 
 import {infoLog} from "./utils/logger.js";
 import authRoute from './router/user.js'
+import carRoute from './router/car.js'
 
 const app = express()
 const PORT = process.env.PORT || 3000
@@ -20,6 +21,7 @@ hbs.registerPartials(__dirname, './views/partials')
 
 
 app.use('/api/auth', authRoute)
+app.use('/api/cars', carRoute)
 
 
 app.listen(PORT, () => {
