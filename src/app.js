@@ -8,6 +8,7 @@ import {infoLog} from "./utils/logger.js";
 import authRoute from './router/user.js'
 import carRoute from './router/car.js'
 import routeRoute from './router/route.js'
+import orderRoute from './router/order.js'
 import {auth} from "./middlewares/auth.js";
 
 const app = express()
@@ -27,6 +28,7 @@ hbs.registerPartials(__dirname, './views/partials')
 app.use('/api/auth', authRoute)
 app.use('/api/cars', [auth, carRoute])
 app.use('/api/routes', [auth, routeRoute])
+app.use('/api/orders', [auth, orderRoute])
 
 
 app.listen(PORT, () => {
