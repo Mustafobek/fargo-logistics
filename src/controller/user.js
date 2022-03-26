@@ -8,6 +8,8 @@ export const login = async (req, res) => {
     try {
         const user = await User.findOne({username: req.body.username})
 
+        console.log(user)
+
         if(!user) {
             return errorRes(res, {message: 'User not found'})
         }
