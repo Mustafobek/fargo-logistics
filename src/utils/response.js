@@ -1,6 +1,6 @@
 
 export const errorRes = (res, data) => {
-    return res.status(400).json({
+    return res.json({
         success: false,
         data
     })
