@@ -16,7 +16,8 @@ const schema = new mongoose.Schema({
     deleted: {
         type: Boolean,
         default: false
-    }
+    },
+    shortname: String
 })
 
 export const Route = mongoose.model('routes', schema)

@@ -1,6 +1,6 @@
 import {errorLog} from "../utils/logger.js";
 import {errorRes, notFound, successRes} from "../utils/response.js";
-import {Order} from "../models/Order";
+import {Order} from "../models/Order.js";
 
 
 

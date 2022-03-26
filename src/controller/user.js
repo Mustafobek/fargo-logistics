@@ -1,5 +1,5 @@
 import {errorLog} from "../utils/logger.js";
-import {errorRes, successRes} from "../utils/response.js";
+import {errorRes, notFound, successRes} from "../utils/response.js";
 import {User} from "../models/User.js";
 import bcrypt from 'bcryptjs'
 import {generateToken} from "../utils/authToken.js";
@@ -52,3 +52,16 @@ export const register = async (req, res) => {
         console.log(errorLog(err.message))
     }
 }
+
+
+export const getUser = async (req, res) => {
+    try {
+        const user = await User.findOne({_id: req.params.id})
+        if(!user) return notFound(res)
+
+        return successRes(res, 201, {user})
+    } catch (err) {
+        console.log(errorLog(err.message))
+    }
+}
+
