@@ -33,6 +33,7 @@ const Create = () => {
     }
   }, [cars, routes, drivers]);
 
+  // console.log(cars, routes, drivers)
   return (
     <div>
       <Navbar />
@@ -52,16 +53,16 @@ const Create = () => {
                     <div id="products">
                       <div className="product">
                         <div className="row mb-2">
-                          <div className="col-sm-2">
-                            <div className="name fw-bold">Ед. изм.</div>
+                          <div className="col-md-12 col-sm-12">
+                            <div className="name fw-bold">Title</div>
                             <div className="value">
                               <div className="input-group">
-                                <input id="product-unit" className="product-unit input--style-5" name="unit" required />
+                                <input id="product-unit" className="input--style-5" name="unit" required />
                               </div>
                             </div>
                           </div>
-                          <div className="col-sm-3">
-                            <div className="name fw-bold">Кол-во</div>
+                          <div className="col-sm-12 col-md-6">
+                            <div className="name fw-bold">Driver</div>
                             <div className="value">
                               <div className="input-group">
                                 <input id="product-qty" className="product-qty input--style-5" name="quantity" min="1"
@@ -71,16 +72,16 @@ const Create = () => {
                           </div>
 
 
-                          <div className="col-sm-5">
-                            <div className="name fw-bold">Характеристика</div>
+                          <div className="col-sm-12 col-md-6">
+                            <div className="name fw-bold">Route</div>
                             <div className="value">
                               <div className="input-group">
                                 <input id="product-char" className="product-char input--style-5" required />
                               </div>
                             </div>
                           </div>
-                          <div className="col-sm-3">
-                            <div className="name fw-bold">Примерная цена</div>
+                          <div className="col-sm-12 col-md-6">
+                            <div className="name fw-bold">Car</div>
                             <div className="value">
                               <div className="input-group">
                                 <input id="product-aprice" type="number" className="product-aprice input--style-5"

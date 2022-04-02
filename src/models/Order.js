@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 
 export const ORDER_STATUS = {
     inProcess: 'IN_PROCESS',
+    preCompleted: 'PRE_COMPLETED',
     completed: 'COMPLETED'
 }
 
