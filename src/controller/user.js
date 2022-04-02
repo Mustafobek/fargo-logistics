@@ -65,3 +65,18 @@ export const getUser = async (req, res) => {
     }
 }
 
+export const getUsers = async (req, res) => {
+    try {
+        const filter = {}
+
+        if (req.query.role) {
+            filter.role = req.query.role
+        }
+
+        const users = await User.find(filter)
+
+        return successRes(res, 201, {users})
+    } catch (err) {
+        console.log(errorLog(err.message))
+    }
+}

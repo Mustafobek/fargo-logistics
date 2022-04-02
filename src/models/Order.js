@@ -29,11 +29,12 @@ const schema = new mongoose.Schema({
     updates: [{
         status: {
             type: String,
-            required: true
+            required: true,
         },
         time: {
             type: Date,
-            required: true
+            required: true,
+            default: Date.now()
         }
     }]
 })
