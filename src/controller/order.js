@@ -1,6 +1,6 @@
 import { errorLog } from "../utils/logger.js";
 import { errorRes, notFound, successRes } from "../utils/response.js";
-import { Order } from "../models/Order.js";
+import { Order, ORDER_STATUS } from "../models/Order.js";
 
 export const getOrders = async (req, res) => {
   try {
@@ -34,9 +34,9 @@ export const getOrder = async (req, res) => {
 
 export const createOrder = async (req, res) => {
   try {
-    const order = new Order(req.body);
+    const order = new Order({...req.body, driverId: req.user._id});
     order.updates.push({
-      status: "started",
+      status: ORDER_STATUS.inProcess,
       time: Date.now(),
     });
     await order.save();

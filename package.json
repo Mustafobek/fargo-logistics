@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "start": "node src/app.js",
-    "dev": "env-cmd -f config/dev.env nodemon src/app.js",
+    "dev": "env-cmd -f config/dev.env nodemon -e js,hbs src/app.js",
     "co": "concurrently --prifix client \"npm run start\" && \"npm run dev\""
   },
   "keywords": [],

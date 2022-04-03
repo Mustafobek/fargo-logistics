@@ -26,7 +26,12 @@ export const login = async (req, res) => {
             role: user.role
         })
 
-        return successRes(res, 200, {token})
+        const userInfo = {
+            username: user.username,
+            role: user.role
+        }
+
+        return successRes(res, 200, {token, userInfo})
     } catch (err) {
         console.log(errorLog(err.message))
     }

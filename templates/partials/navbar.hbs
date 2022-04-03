@@ -1,0 +1,59 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+<link rel="stylesheet" href="/css/navbar.css">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+
+<body id="body-pd">
+    <header class="header" id="header">
+        <div class="header_toggle"> <i class='bx bx-menu' id="header-toggle"></i> </div>
+        <!--    <div class="header_img"> <img src="https://i.imgur.com/hczKIze.jpg" alt=""> </div>-->
+        <div class="">
+            <h5 class="pe-5 username"></h5>
+        </div>
+    </header>
+    <div class="l-navbar" id="nav-bar">
+        <nav class="nav">
+            <div>
+                <a href="/main" class="nav_logo">
+                    <img src="/img/Logo.png" class="img me-2" width="28" height="24" alt="">
+                    <span class="nav_logo-name">Fargo</span>
+                </a>
+                <div class="nav_list">
+                    <a href="/create-order" class="nav_link btn" id="create">
+                        <i class='bx bx-folder-plus nav_icon'></i>
+                        <span class="nav_name">Создать заказ</span>
+                    </a>
+                    <a href="/history" class="nav_link btn" id="history">
+                        <i class='bx bx-check-square nav_icon'></i>
+                        <span class="nav_name">Завершенные заказы</span>
+                    </a>
+                    <a href="/deleted" class="nav_link btn" id="deleted">
+                        <i class='bx bx-folder-minus nav_icon'></i>
+                        <span class="nav_name">Статистика</span>
+                    </a>
+                </div>
+            </div> <a href="#" class="nav_link" id="logout">
+                <i class='bx bx-log-out nav_icon'></i>
+                <span class="nav_name">Выйти</span> </a>
+        </nav>
+    </div>
+
+
+    <script src="/js/navbar.js"></script>
+
+    <script>
+        function goBack() {
+            window.location.hash = window.location.lasthash[window.location.lasthash.length - 1];
+            //blah blah blah
+            window.location.lasthash.pop();
+        }
+
+        document.getElementById('logout').onclick = ev => {
+            ev.preventDefault()
+
+            localStorage.clear()
+            //window.location.href = '/'
+
+            console.log(window.location)
+        }
+    </script>

@@ -1,0 +1,84 @@
+{{>header}}
+
+{{>navbar}}
+
+
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i"
+    rel="stylesheet">
+<link href="/css/create.css" rel="stylesheet" media="all">
+
+
+<div class="page-wrapper mt-5 bg-gra-03 p-t-45 p-b-50 pt-5 mt-0">
+    <div class="wrapper wrapper--w790">
+        <div class="card card-5">
+            <div class="card-heading">
+                <h2 class="title">Регистрация заказа</h2>
+            </div>
+            <div class="card-body">
+                <form method="POST">
+                    <div id="products">
+                        <div class="product">
+                            <div class="row mb-2">
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-12">
+                                        <div class="name fw-bold">TITLE</div>
+                                        <div class="value">
+                                            <div class="input-group">
+                                                <input id="product-unit" class="product-unit input--style-5" name="unit"
+                                                    required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--                    NEW ITEMS -->
+                    </div>
+
+
+                    <div class="row mb-2 p-2">
+                        <div class="row">
+                            <div class="col-md-6 col-sm-12">
+                                <h5 class="card-title">CAR COMPANY</h5>
+                                <select class="form-select" aria-label="Default select example" id="post-sel">
+
+                                </select>
+                            </div>
+                            <div class="col-sm-12 col-md-6">
+                                <h5 class="card-title">CAR NUMBER</h5>
+                                <select class="form-select" aria-label="Default select example" id="dep-sel">
+
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--                    COMMENT -->
+                    <div class="row mb-2 p-2">
+                        <div class="input-group">
+                            <label for="product-comment">Основания для закупа</label>
+                            <input id="product-comment" class="product-comment input--style-5" name="quantity"
+                                type="text" required>
+                        </div>
+                    </div>
+
+
+                    <hr class="m-4">
+
+                    <div>
+                        <button class="btn1 btn--radius-2 btn-success" id="sub-btn"
+                            type="submit">Зарегистрировать</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/js/host.js"></script>
+<script>
+    
+</script>
+
+
+{{>footer}}
