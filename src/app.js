@@ -9,6 +9,7 @@ import authRoute from './router/user.js'
 import carRoute from './router/car.js'
 import routeRoute from './router/route.js'
 import orderRoute from './router/order.js'
+import companyRoute from './router/car-company.js'
 import pageRoute from './router/pages.js'
 import {auth} from "./middlewares/auth.js";
 
@@ -29,6 +30,7 @@ app.use('/api/auth', authRoute)
 app.use('/api/cars', [auth, carRoute])
 app.use('/api/routes', [auth, routeRoute])
 app.use('/api/orders', [auth, orderRoute])
+app.use('/api/companies', [auth, companyRoute])
 app.use('/', pageRoute)
 
 

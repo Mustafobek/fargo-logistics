@@ -22,6 +22,10 @@ const schema = new mongoose.Schema({
         type: String,
         default: CAR_STATUS.free
     },
+    ownerCompany: {
+        type: String,
+        required: true
+    },
     deleted: {
         type: Boolean,
         default: false

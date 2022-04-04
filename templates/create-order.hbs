@@ -15,26 +15,17 @@
                 <h2 class="title">Регистрация заказа</h2>
             </div>
             <div class="card-body">
-                <form method="POST">
-                    <div id="products">
-                        <div class="product">
-                            <div class="row mb-2">
-                                <div class="row">
-                                    <div class="col-md-6 col-sm-12">
-                                        <div class="name fw-bold">TITLE</div>
-                                        <div class="value">
-                                            <div class="input-group">
-                                                <input id="product-unit" class="product-unit input--style-5" name="unit"
-                                                    required>
-                                            </div>
-                                        </div>
-                                    </div>
+                <form method="POST" id="form">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="name fw-bold">TITLE</div>
+                            <div class="value">
+                                <div class="input-group">
+                                    <input id="order-title" class="product-unit input--style-5" required>
                                 </div>
                             </div>
                         </div>
-                        <!--                    NEW ITEMS -->
                     </div>
-
 
                     <div class="row mb-2 p-2">
                         <div class="row">
@@ -52,7 +43,7 @@
                             </div>
                             <div class="col-md-4 col-sm-12">
                                 <h5 class="card-title">ROUTER</h5>
-                                <select class="form-select" aria-label="Default select example" id="routes">
+                                <select class="form-select" aria-label="Default select example" id="router">
 
                                 </select>
                             </div>
@@ -81,7 +72,16 @@
     }).then(r => r.json())
     .then(({data, success}) => {
         if (success) {
-            console.log(data)
+            const companySelect = document.getElementById('car-comp')
+
+            for (const company of data.companies) {
+                console.log(company)
+                const option = document.createElement('option')
+                option.value = company._id
+                option.innerText = company.name
+
+                companySelect.appendChild(option)
+            }
         }
     })
 
@@ -96,7 +96,7 @@
 
             for (const car of data.cars) {
                 const option = document.createElement('option')
-                option.value = car.id
+                option.value = car._id
                 option.innerText = `${car.model} - ${car.number}`
 
                 carsSelect.appendChild(option)
@@ -111,11 +111,11 @@
     }).then(r => r.json())
     .then(({data, success}) => {
         if (success) {
-            const routeSelect = document.getElementById('routes')
+            const routeSelect = document.getElementById('router')
 
             for (const route of data.routes) {
                 const option = document.createElement('option')
-                option.value = route.id
+                option.value = route._id
                 option.innerText = route.shortname
 
                 routeSelect.appendChild(option)
@@ -125,10 +125,31 @@
     .catch(err => console.log(err))
 
 
-    document.getElementById('sub-btn').addEventListener('click', ev => {
+    document.getElementById('form').addEventListener('submit', ev => {
         ev.preventDefault()
+        const router = document.getElementById('router')
+        const cars = document.getElementById('cars')
+        const carComp = document.getElementById('car-comp')
 
-        console.log('cl')
+        fetch(host.local + endpoints.orders, {
+            ...requestConfig.withToken,
+            method: 'POST',
+            body: JSON.stringify({
+                title: document.getElementById('order-title').value,
+                routeId: router.value,
+                carId: cars.value,
+                carOwnerCompanyId: carComp.value
+            })
+        }).then(r => r.json())
+        .then(({success, data}) => {
+            console.log(success)
+            if(success) {
+                window.location.href = '/main'
+            }
+        })
+        .catch(err => console.log(err))
+
+
     })
 </script>
 

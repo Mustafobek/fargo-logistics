@@ -141,9 +141,9 @@
             body: JSON.stringify(bodyObj)
         }).then(r => r.json())
         .then(({success, data}) => {
-            console.log(success)
-            console.log(data)
-            console.log(nextCityName)
+            if (success) {
+                window.location.reload()
+            }
         })
         .catch(err => console.log(err))
     })
