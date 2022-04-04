@@ -38,36 +38,32 @@
 
                     <div class="row mb-2 p-2">
                         <div class="row">
-                            <div class="col-md-6 col-sm-12">
+                            <div class="col-md-4 col-sm-12">
                                 <h5 class="card-title">CAR COMPANY</h5>
-                                <select class="form-select" aria-label="Default select example" id="post-sel">
+                                <select class="form-select" aria-label="Default select example" id="car-comp">
 
                                 </select>
                             </div>
-                            <div class="col-sm-12 col-md-6">
+                            <div class="col-sm-12 col-md-4">
                                 <h5 class="card-title">CAR NUMBER</h5>
-                                <select class="form-select" aria-label="Default select example" id="dep-sel">
+                                <select class="form-select" aria-label="Default select example" id="cars">
+
+                                </select>
+                            </div>
+                            <div class="col-md-4 col-sm-12">
+                                <h5 class="card-title">ROUTER</h5>
+                                <select class="form-select" aria-label="Default select example" id="routes">
 
                                 </select>
                             </div>
                         </div>
                     </div>
-
-                    <!--                    COMMENT -->
-                    <div class="row mb-2 p-2">
-                        <div class="input-group">
-                            <label for="product-comment">Основания для закупа</label>
-                            <input id="product-comment" class="product-comment input--style-5" name="quantity"
-                                type="text" required>
-                        </div>
-                    </div>
-
 
                     <hr class="m-4">
 
                     <div>
                         <button class="btn1 btn--radius-2 btn-success" id="sub-btn"
-                            type="submit">Зарегистрировать</button>
+                            type="submit">Create</button>
                     </div>
                 </form>
             </div>
@@ -77,7 +73,63 @@
 
 <script src="/js/host.js"></script>
 <script>
-    
+    // CAR-COMPANIES
+
+    fetch(host.local + endpoints.carCompany, {
+        ...requestConfig.withToken,
+        method: 'GET'
+    }).then(r => r.json())
+    .then(({data, success}) => {
+        if (success) {
+            console.log(data)
+        }
+    })
+
+    // CARS
+    fetch(host.local + endpoints.cars, {
+        ...requestConfig.withToken,
+        method: 'GET'
+    }).then(r => r.json())
+    .then(({data, success}) => {
+        if (success) {
+            const carsSelect = document.getElementById('cars')
+
+            for (const car of data.cars) {
+                const option = document.createElement('option')
+                option.value = car.id
+                option.innerText = `${car.model} - ${car.number}`
+
+                carsSelect.appendChild(option)
+            }
+        }
+    })
+
+    // ROUTE
+    fetch(host.local + endpoints.routes, {
+        ...requestConfig.withToken,
+        method: 'GET'
+    }).then(r => r.json())
+    .then(({data, success}) => {
+        if (success) {
+            const routeSelect = document.getElementById('routes')
+
+            for (const route of data.routes) {
+                const option = document.createElement('option')
+                option.value = route.id
+                option.innerText = route.shortname
+
+                routeSelect.appendChild(option)
+            }
+        }
+    })
+    .catch(err => console.log(err))
+
+
+    document.getElementById('sub-btn').addEventListener('click', ev => {
+        ev.preventDefault()
+
+        console.log('cl')
+    })
 </script>
 
 

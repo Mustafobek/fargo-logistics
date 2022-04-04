@@ -8,17 +8,22 @@ export const ORDER_STATUS = {
 
 const schema = new mongoose.Schema({
     carId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'cars'
+        // required: true
+    },
+    carOwnerCompanyId: {
         type: String,
         required: true
     },
     // driver
     driverId: {
-        type: String,
-        required: true
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'users'
     },
     routeId: {
-        type: String,
-        required: true
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'routes'
     },
     title: {
         type: String
@@ -30,12 +35,24 @@ const schema = new mongoose.Schema({
     updates: [{
         status: {
             type: String,
-            required: true,
+            // required: true,
+            default: ORDER_STATUS.inProcess
         },
         time: {
             type: Date,
-            required: true,
             default: Date.now()
+        },
+        currentCity: {
+            type: String,
+            required: true
+        },
+        nextCity: {
+            type: String,
+            required: true
+        },
+        willFinish: {
+            type: Number,
+            required: true
         }
     }]
 })

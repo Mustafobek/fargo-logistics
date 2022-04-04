@@ -1,0 +1,152 @@
+{{>header}}
+{{>navbar}}
+
+<link rel="stylesheet" href="/css/card.css">
+
+<div class="mt-5 mb-3 pt-3 pb-0"></div>
+<div class="container mt-1 mb-3">
+    <div class="row" id="card">
+        <div class="card p-3 mb-2">
+            <div class="d-flex justify-content-between p-3">
+                <div class="d-flex flex-row align-items-center">
+                    <div class="icon"> <i class="bx bx-package"></i> </div>
+                    <div class="ms-2 c-details">
+                        <h6 class="mb-0" id="car-number"></h6> <span id="start-time"></span>
+                    </div>
+                </div>
+                <div class="badge"> <span id="status"></span> </div>
+            </div>
+            <div class="mt-5 p-3">
+                <h3 class="heading" id="order-title"><br></h3>
+                <h3><span class="heading" id="driver-fullname"></span></h3>
+
+                <div id="route">
+                    ROUTES:
+                </div>
+
+                <div class="mt-5">
+                    <div class="progress">
+                        <div class="progress-bar" id="progress-bar" role="progressbar"></div>
+                    </div>
+                    <div class="mt-3"> <span class="text1" id="current-city"></span> - <span class="text2" id="next-city"></span></div>
+                </div>
+            </div>
+            <div class="row p-4">
+                <div class="col text-end">
+                    <button class="btn btn-success" id="next-btn">Start the Next city</button>
+                </div>
+            </div>
+            <hr>
+            <div class="mt-2">
+                <div class="row">
+                    <link rel="stylesheet" href="/css/updates-card.css">
+                    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+                    <div class="container">
+                        <div>
+                            <div class="heading text-center p-3">
+                                Updates
+                            </div>
+                        </div>
+                        <div class="row" id="updates">
+
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const id = getId()
+    const route = document.getElementById('route')
+    const nextBtn = document.getElementById('next-btn')
+    let nextCityName = ''
+
+    fetch(host.local + endpoints.orders + id, {
+        ...requestConfig.withToken, method: "GET"
+    }).then(r => r.json())
+    .then(({success, data: {order}}) => {
+        if(success) {
+
+
+            document.getElementById('car-number').innerText = order.carId.number
+            document.getElementById('start-time').innerText = moment(order.updates[0].time).format('HH:mm - DD.MM.YYYY')
+            document.getElementById('status').innerText = order.updates[order.updates.length - 1].status === 'IN_PROCESS' ? "В пути" : "Завершен"
+            document.getElementById('order-title').innerText = order.title
+            document.getElementById('driver-fullname').innerText = order.driverId.fullName ?? order.driverId.username
+            document.getElementById('progress-bar').style.width = order.updates.length / (order.routeId.cities.length) * 100 + '%'
+            document.getElementById('current-city').innerText = order.updates[order.updates.length - 1].currentCity
+            document.getElementById('next-city').innerText = order.routeId.cities[order.updates.length] ? order.routeId.cities[order.updates.length].city : "FINISH"
+
+
+            // NEXT CITY NAME
+            nextCityName = order.updates[order.updates.length - 1].nextCity
+            document.getElementById('next-btn').innerText = nextCityName
+
+            // DOM FINISH BUTTON DISABLING
+            if(order.status !== 'IN_PROCESS') {
+                console.log(nextBtn.innerText)
+                document.getElementById('next-btn').innerText = 'COMPLETED'
+                document.getElementById('next-btn').classList.add('disabled')
+                document.getElementById('next-btn').classList.add('btn-warning')
+            }
+
+            // CITY LIST
+            for (const city of order.routeId.cities) {
+                const span = document.createElement('span')
+                span.className = 'text1'
+                span.innerText = city.city + " "
+                route.appendChild(span)
+            }
+
+                // UPDATES
+            //for (const update of order.updates) {
+            for (let i = 0; i < order.updates.length - 1; i++) {
+                const updates = document.getElementById('updates')
+                const div = document.createElement('div')
+                div.className = 'col-md-6 col-xl-3'
+                div.innerHTML = `
+                <div class="card bg-c-green order-card">
+                    <div class="card-block">
+                        <div class="text-center">
+                            <i class="fa fa-rocket f-right pe-3"></i>
+                        </div>
+                        <h5 class="m-b-20 text-dark">${order.updates[i].currentCity} - ${order.updates[i].nextCity}</h5>
+                        <div class="text-right"><span>Время начало: ${moment(order.updates[i].time).format('HH:mm - DD.MM.YYYY')}</span></div>
+                        <div class="m-b-0">Стд время: ${order.updates[i].willFinish} часов</div>
+                        <div class="text-right"><span>Время начало: ${moment(order.updates[i].time).add(order.updates[i].willFinish, 'h').format('HH:mm - DD.MM.YYYY')}</span></div>
+                        <p class="m-0">Статус: ${order.updates[i].status === 'IN_PROCESS' ? "В пути" : "Завершен"}</p>
+                    </div>
+                </div>
+                `
+                updates.appendChild(div)
+            }
+        }
+    })
+
+    document.getElementById('next-btn').addEventListener('click', ev => {
+        ev.preventDefault()
+
+        const bodyObj = {}
+
+        if(nextCityName === 'FINISH') {
+            bodyObj.city = 'FINISH'
+        } else {
+            bodyObj.city = nextCityName
+        }
+
+        fetch(host.local + endpoints.orders + id, {
+            ...requestConfig.withToken,
+            method: 'PATCH',
+            body: JSON.stringify(bodyObj)
+        }).then(r => r.json())
+        .then(({success, data}) => {
+            console.log(success)
+            console.log(data)
+            console.log(nextCityName)
+        })
+        .catch(err => console.log(err))
+    })
+</script>
+
+{{>footer}}

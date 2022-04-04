@@ -8,8 +8,6 @@ export const login = async (req, res) => {
     try {
         const user = await User.findOne({username: req.body.username})
 
-        console.log(user)
-
         if(!user) {
             return errorRes(res, {message: 'User not found'})
         }
@@ -26,12 +24,7 @@ export const login = async (req, res) => {
             role: user.role
         })
 
-        const userInfo = {
-            username: user.username,
-            role: user.role
-        }
-
-        return successRes(res, 200, {token, userInfo})
+        return successRes(res, 200, {token, user})
     } catch (err) {
         console.log(errorLog(err.message))
     }

@@ -125,11 +125,10 @@
                     message.style.color = '#f5af19'
                     message.innerText = 'ОШИБКА'
                 } else {
-                    console.log(data)
                     localStorage.setItem('token', data.token)
                     message.style.color = 'green'
                     message.innerText = 'ВСЕ КРУТО'
-                    if (data.userInfo.role !== 'админ') {
+                    if (data.user.role !== 'админ') {
                         window.location.href = '/main'
                     } else {
                         window.location.href = 'admin/main'

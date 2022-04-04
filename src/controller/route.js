@@ -30,8 +30,10 @@ export const createRoute = async (req, res) => {
     try {
         const route = new Route({
             cities: req.body.cities,
-            periods: req.body.periods
+            periods: req.body.periods,
+            shortname: req.body.shortname
         })
+
         await route.save()
 
         return successRes(res, 201, {route})

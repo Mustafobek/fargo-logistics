@@ -12,20 +12,20 @@
 </div>
 
 <script>
-    fetch(host.local + '/api/orders?status=IN_PROCESS', {
+    fetch(host.local + '/api/orders?status=COMPLETED', {
         ...requestConfig.withToken,
         method: 'GET'
     }).then(r => r.json())
-    .then(({success, data}) => {
-        if(success) {
-            for (const order of data.orders) {
-                console.log(data.orders)
-                const cardList = document.getElementById('card-list')
-                const card = document.createElement('div')
-                card.className = 'col-md-6 col-sm-12 col-xxl-4'
-                const progressPercentage = order.updates.length / (order.routeId.cities.length) * 100
+            .then(({success, data}) => {
+                if(success) {
+                    for (const order of data.orders) {
+                        console.log(data.orders)
+                        const cardList = document.getElementById('card-list')
+                        const card = document.createElement('div')
+                        card.className = 'col-md-6 col-sm-12 col-xxl-4'
+                        const progressPercentage = order.updates.length / (order.routeId.cities.length) * 100
 
-                card.innerHTML = `
+                        card.innerHTML = `
                 <div class="card p-3 mb-2">
                 <div class="d-flex justify-content-between">
                     <div class="d-flex flex-row align-items-center">
@@ -49,11 +49,11 @@
                 </div>
             </div>
                 `
-                cardList.appendChild(card)
-                console.log(cardList)
-            }
-        }
-    })
+                        cardList.appendChild(card)
+                        console.log(cardList)
+                    }
+                }
+            })
 </script>
 
 {{>footer}}

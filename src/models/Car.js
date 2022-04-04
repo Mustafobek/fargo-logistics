@@ -6,6 +6,14 @@ export const CAR_STATUS = {
 }
 
 const schema = new mongoose.Schema({
+    ownerCompanyId: {
+        type: String,
+        // required: true
+    },
+    model: {
+        type: String,
+        required: true
+    },
     number: {
         type: String,
         required: true

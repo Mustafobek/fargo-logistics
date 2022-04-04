@@ -31,4 +31,11 @@ const schema = new mongoose.Schema({
     }
 })
 
+schema.methods.toJSON = function () {
+    const userObject = this.toObject()
+    delete userObject.password
+
+    return userObject
+}
+
 export const User = mongoose.model('users', schema)
