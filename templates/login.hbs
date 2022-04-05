@@ -128,10 +128,10 @@
                     localStorage.setItem('token', data.token)
                     message.style.color = 'green'
                     message.innerText = 'ВСЕ КРУТО'
-                    if (data.user.role !== 'админ') {
+                    if (data.user.role !== USER_ROLE.admin) {
                         window.location.href = '/main'
                     } else {
-                        window.location.href = 'admin/main'
+                        window.location.href = 'ad/main'
                     }
                     message.innerText = null
                 }

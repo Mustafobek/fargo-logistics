@@ -2,6 +2,7 @@ import { errorLog } from "../utils/logger.js";
 import { errorRes, notFound, successRes } from "../utils/response.js";
 import { Order, ORDER_STATUS } from "../models/Order.js";
 import {Route} from "../models/Route.js";
+import {USER_ROLE} from "../models/User.js";
 
 export const getOrders = async (req, res) => {
   try {
@@ -11,7 +12,12 @@ export const getOrders = async (req, res) => {
       filter.status = req.query.status;
     }
 
-    const orders = await Order.find(filter).populate(['carId', 'routeId', 'driverId']).exec();
+    if(req.user.role !== USER_ROLE.admin) {
+      filter.driverId = req.user._id
+    }
+
+
+    const orders = await Order.find(filter).populate(['carId', 'routeId', 'driverId', 'carOwnerCompanyId']).exec();
 
     return successRes(res, 200, { orders });
   } catch (err) {
@@ -21,7 +27,7 @@ export const getOrders = async (req, res) => {
 
 export const getOrder = async (req, res) => {
   try {
-    const order = await Order.findOne({ _id: req.params.id }).populate(['carId', 'routeId', 'driverId']).exec();
+    const order = await Order.findOne({ _id: req.params.id }).populate(['carId', 'routeId', 'driverId', 'carOwnerCompanyId']).exec();
 
     if (!order) {
       return notFound(res);

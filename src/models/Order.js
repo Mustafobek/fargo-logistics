@@ -13,8 +13,8 @@ const schema = new mongoose.Schema({
         // required: true
     },
     carOwnerCompanyId: {
-        type: String,
-        required: true
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'car-companies'
     },
     // driver
     driverId: {

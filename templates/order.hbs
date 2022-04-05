@@ -16,12 +16,13 @@
                 </div>
                 <div class="badge"> <span id="status"></span> </div>
             </div>
-            <div class="mt-5 p-3">
-                <h3 class="heading" id="order-title"><br></h3>
+            <div class="mt-3 p-3">
+                <h5 class="heading" id="order-title"><br></h5>
+                <h5 class="heading" id="car-company"><br></h5>
                 <h3><span class="heading" id="driver-fullname"></span></h3>
 
                 <div id="route">
-                    ROUTES:
+                    Маршруты:
                 </div>
 
                 <div class="mt-5">
@@ -67,13 +68,12 @@
     }).then(r => r.json())
     .then(({success, data: {order}}) => {
         if(success) {
-
-
             document.getElementById('car-number').innerText = order.carId.number
             document.getElementById('start-time').innerText = moment(order.updates[0].time).format('HH:mm - DD.MM.YYYY')
-            document.getElementById('status').innerText = order.updates[order.updates.length - 1].status === 'IN_PROCESS' ? "В пути" : "Завершен"
-            document.getElementById('order-title').innerText = order.title
-            document.getElementById('driver-fullname').innerText = order.driverId.fullName ?? order.driverId.username
+            document.getElementById('status').innerText = order.status === 'IN_PROCESS' ? "В пути" : "Завершен"
+            document.getElementById('car-company').innerText = 'Владелец машин:\t' + order.carOwnerCompanyId.name
+            document.getElementById('order-title').innerText = 'Наименование:\t' + order.title
+            document.getElementById('driver-fullname').innerText = 'Ф.И.О:\t' + order.driverId.fullName ?? order.driverId.username
             document.getElementById('progress-bar').style.width = order.updates.length / (order.routeId.cities.length) * 100 + '%'
             document.getElementById('current-city').innerText = order.updates[order.updates.length - 1].currentCity
             document.getElementById('next-city').innerText = order.routeId.cities[order.updates.length] ? order.routeId.cities[order.updates.length].city : "FINISH"
@@ -99,11 +99,16 @@
                 route.appendChild(span)
             }
 
-                // UPDATES
-            //for (const update of order.updates) {
+            // UPDATES
             for (let i = 0; i < order.updates.length - 1; i++) {
                 const updates = document.getElementById('updates')
                 const div = document.createElement('div')
+
+                const startTime = order.updates[i].time
+                const finishTime = order.updates[i + 1] ? order.updates[i + 1].time : 'WAY'
+                const diffInSecs = Math.abs(new Date(finishTime) - new Date(startTime)) / 1000
+                const finishedIn = convertHMS(diffInSecs)
+
                 div.className = 'col-md-6 col-xl-3'
                 div.innerHTML = `
                 <div class="card bg-c-green order-card">
@@ -112,9 +117,10 @@
                             <i class="fa fa-rocket f-right pe-3"></i>
                         </div>
                         <h5 class="m-b-20 text-dark">${order.updates[i].currentCity} - ${order.updates[i].nextCity}</h5>
-                        <div class="text-right"><span>Время начало: ${moment(order.updates[i].time).format('HH:mm - DD.MM.YYYY')}</span></div>
+                        <div class="text-right"><span>Время начало: ${moment(startTime).format('HH:mm - DD.MM.YYYY')}</span></div>
                         <div class="m-b-0">Стд время: ${order.updates[i].willFinish} часов</div>
-                        <div class="text-right"><span>Время начало: ${moment(order.updates[i].time).add(order.updates[i].willFinish, 'h').format('HH:mm - DD.MM.YYYY')}</span></div>
+                        <div class="text-right"><span>Закончено в: ${finishTime !== 'WAY' ? moment(finishTime).format('HH:mm - DD.MM.YYYY') : 'WAY'}</span></div>
+                        <div class="text-right"><span>Доехал в: ${finishedIn}</span></div>
                         <p class="m-0">Статус: ${order.updates[i].status === 'IN_PROCESS' ? "В пути" : "Завершен"}</p>
                     </div>
                 </div>

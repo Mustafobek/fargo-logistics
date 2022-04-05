@@ -7,8 +7,8 @@ export const CAR_STATUS = {
 
 const schema = new mongoose.Schema({
     ownerCompanyId: {
-        type: String,
-        // required: true
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'car-companies'
     },
     model: {
         type: String,
@@ -21,10 +21,6 @@ const schema = new mongoose.Schema({
     status: {
         type: String,
         default: CAR_STATUS.free
-    },
-    ownerCompany: {
-        type: String,
-        required: true
     },
     deleted: {
         type: Boolean,

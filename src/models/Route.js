@@ -17,7 +17,10 @@ const schema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
-    shortname: String
+    shortname: {
+        type: String,
+        required: true
+    }
 })
 
 export const Route = mongoose.model('routes', schema)
