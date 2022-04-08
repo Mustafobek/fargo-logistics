@@ -21,7 +21,7 @@
             for (const order of data.orders) {
                 const cardList = document.getElementById('card-list')
                 const card = document.createElement('div')
-                card.className = 'col-md-6 col-sm-12 col-xxl-4'
+                card.className = 'col-md-6 col-sm-12'
                 const progressPercentage = order.updates.length / (order.routeId.cities.length) * 100
 
                 card.innerHTML = `
@@ -37,8 +37,8 @@
                 </div>
                 <div class="mt-3">
                     <a href="/order/${order._id}" class="link">
-                        <h4 class="heading">Владелец машин: ${order.carId.ownerCompanyId.name}</h4>
-                        <h3 class="heading">Наименование заказа: ${order.title}<br>Водитель: ${order.driverId.fullName ?? order.driverId.username}</h3>
+                        <h5 class="heading">Владелец машин: ${order.carId.ownerCompanyId.name}</h5>
+                        <h4 class="heading">Наименование заказа: ${order.title}<br>Водитель: ${order.driverId.fullName ?? order.driverId.username}</h4>
                     </a>
                     <div class="mt-3">
                         <div class="progress">
@@ -50,7 +50,6 @@
             </div>
                 `
                 cardList.appendChild(card)
-                console.log(cardList)
             }
         }
     })
