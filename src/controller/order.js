@@ -6,13 +6,7 @@ import {USER_ROLE} from "../models/User.js";
 
 export const getOrders = async (req, res) => {
   try {
-    const filter = {
-      deleted: false
-    };
-
-    if(req.query.deleted) {
-      filter.deleted = true
-    }
+    const filter = {};
 
     if (req.query.status) {
       filter.status = req.query.status;
@@ -21,7 +15,6 @@ export const getOrders = async (req, res) => {
     if(req.user.role !== USER_ROLE.admin) {
       filter.driverId = req.user._id
     }
-
 
     const orders = await Order.find(filter).populate(['routeId', 'driverId',
       {

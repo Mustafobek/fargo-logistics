@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="/css/card.css">
 
 <div class="mt-5 mb-3 pt-3 pb-0"></div>
-<div class="container mt-1 mb-3">
+<div class="container mt-1 mb-3" style="margin-left: 0px;">
     <div class="row" id="card-list">
 
     </div>
@@ -19,7 +19,6 @@
     .then(({success, data}) => {
         if(success) {
             for (const order of data.orders) {
-                console.log(data.orders)
                 const cardList = document.getElementById('card-list')
                 const card = document.createElement('div')
                 card.className = 'col-md-6 col-sm-12 col-xxl-4'
