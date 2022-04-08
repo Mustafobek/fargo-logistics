@@ -6,7 +6,13 @@ import {USER_ROLE} from "../models/User.js";
 
 export const getOrders = async (req, res) => {
   try {
-    const filter = {};
+    const filter = {
+      deleted: false
+    };
+
+    if(req.query.deleted) {
+      filter.deleted = true
+    }
 
     if (req.query.status) {
       filter.status = req.query.status;

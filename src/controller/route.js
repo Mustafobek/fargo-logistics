@@ -7,7 +7,7 @@ import {Route} from "../models/Route.js";
 
 export const getRoutes = async (req, res) => {
     try {
-        const routes = await Route.find({})
+        const routes = await Route.find({deleted: false})
         return successRes(res, 200, {routes})
     } catch (err) {
         console.log(errorLog(err.message))
@@ -16,7 +16,7 @@ export const getRoutes = async (req, res) => {
 
 export const getRoute = async (req, res) => {
     try {
-        const route = await Route.findOne({_id: req.params.id})
+        const route = await Route.findOne({_id: req.params.id, deleted: false})
 
         if(!route) return notFound(res)
 
