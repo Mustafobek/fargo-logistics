@@ -15,6 +15,7 @@ r.get('/order/:id', (req, res) => res.render('order.hbs', {title: 'Order'}))
 r.get('/ad/main', (req, res) => res.render('admin/main.hbs', {title: 'Admin'}))
 r.get('/ad/create-car-company', (req, res) => res.render('admin/create-car-company.hbs', {title: 'Admin'}))
 r.get('/ad/create-car', (req, res) => res.render('admin/create-car.hbs', {title: 'Admin'}))
+r.get('/ad/create-user', (req, res) => res.render('admin/create-user.hbs', {title: 'Admin'}))
 r.get('/ad/create-route', (req, res) => res.render('admin/create-route.hbs', {title: 'Admin'}))
 
 
