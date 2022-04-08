@@ -68,12 +68,12 @@
     }).then(r => r.json())
     .then(({success, data: {order}}) => {
         if(success) {
-            document.getElementById('car-number').innerText = order.carId.number
+            document.getElementById('car-number').innerText = order.carId.number + ' - ' + order.carId.model
             document.getElementById('start-time').innerText = moment(order.updates[0].time).format('HH:mm - DD.MM.YYYY')
             document.getElementById('status').innerText = order.status === 'IN_PROCESS' ? "В пути" : "Завершен"
-            document.getElementById('car-company').innerText = 'Владелец машин:\t' + order.carOwnerCompanyId.name
+            document.getElementById('car-company').innerText = 'Владелец машин (компания):\t' + order.carId.ownerCompanyId.name
             document.getElementById('order-title').innerText = 'Наименование:\t' + order.title
-            document.getElementById('driver-fullname').innerText = 'Ф.И.О:\t' + order.driverId.fullName ?? order.driverId.username
+            document.getElementById('driver-fullname').innerText = 'Ф.И.О:\t' + (order.driverId.fullName ? order.driverId.fullName : order.driverId.username)
             document.getElementById('progress-bar').style.width = order.updates.length / (order.routeId.cities.length) * 100 + '%'
             document.getElementById('current-city').innerText = order.updates[order.updates.length - 1].currentCity
             document.getElementById('next-city').innerText = order.routeId.cities[order.updates.length] ? order.routeId.cities[order.updates.length].city : "FINISH"

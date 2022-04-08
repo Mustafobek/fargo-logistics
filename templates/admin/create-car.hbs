@@ -1,0 +1,105 @@
+{{>header}}
+
+{{>admin/adminNavbar}}
+
+
+
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i"
+      rel="stylesheet">
+<link href="/css/create.css" rel="stylesheet" media="all">
+
+
+<div class="page-wrapper mt-5 bg-gra-03 p-t-45 p-b-50 pt-5 mt-0">
+    <div class="wrapper wrapper--w790">
+        <div class="card card-5">
+            <div class="card-heading">
+                <h2 class="title">Регистрация заказа</h2>
+            </div>
+            <div class="card-body">
+                <form method="POST" id="form">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-6">
+                            <div class="name fw-bold">Model</div>
+                            <div class="value">
+                                <div class="input-group">
+                                    <input id="model" class="product-unit input--style-5" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                            <div class="name fw-bold">Number</div>
+                            <div class="value">
+                                <div class="input-group">
+                                    <input id="number" class="product-unit input--style-5" required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mb-2 p-2">
+                        <div class="row">
+                            <div class="col-md-4 col-sm-12">
+                                <h5 class="card-title">CAR COMPANY</h5>
+                                <select class="form-select" aria-label="Default select example" id="car-comp">
+
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr class="m-4">
+
+                    <div>
+                        <button class="btn1 btn--radius-2 btn-success" id="sub-btn"
+                                type="submit">Create</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // CAR-COMPANIES
+
+    fetch(host.local + endpoints.carCompany, {
+        ...requestConfig.withToken,
+        method: 'GET'
+    }).then(r => r.json())
+            .then(({data, success}) => {
+                if (success) {
+                    const companySelect = document.getElementById('car-comp')
+
+                    for (const company of data.companies) {
+                        const option = document.createElement('option')
+                        option.value = company._id
+                        option.innerText = company.name
+
+                        companySelect.appendChild(option)
+                    }
+                }
+            })
+
+    document.getElementById('sub-btn').onclick = ev => {
+        ev.preventDefault()
+
+        const obj = {
+            model: document.getElementById('model').value,
+            number: document.getElementById('number').value,
+            ownerCompanyId: document.getElementById('car-comp').value
+        }
+
+        fetch(host.local + endpoints.cars, {
+            ...requestConfig.withToken,
+            method: 'POST',
+            body: JSON.stringify(obj)
+        }).then(r => r.json())
+        .then(({success, data}) => {
+            if(success) {
+                window.location.href = '/ad/main'
+            } else {
+                window.location.reload()
+            }
+        })
+    }
+</script>

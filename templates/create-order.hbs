@@ -29,12 +29,6 @@
 
                     <div class="row mb-2 p-2">
                         <div class="row">
-                            <div class="col-md-4 col-sm-12">
-                                <h5 class="card-title">CAR COMPANY</h5>
-                                <select class="form-select" aria-label="Default select example" id="car-comp">
-
-                                </select>
-                            </div>
                             <div class="col-sm-12 col-md-4">
                                 <h5 class="card-title">CAR NUMBER</h5>
                                 <select class="form-select" aria-label="Default select example" id="cars">
@@ -64,26 +58,6 @@
 
 <script src="/js/host.js"></script>
 <script>
-    // CAR-COMPANIES
-
-    fetch(host.local + endpoints.carCompany, {
-        ...requestConfig.withToken,
-        method: 'GET'
-    }).then(r => r.json())
-    .then(({data, success}) => {
-        if (success) {
-            const companySelect = document.getElementById('car-comp')
-
-            for (const company of data.companies) {
-                console.log(company)
-                const option = document.createElement('option')
-                option.value = company._id
-                option.innerText = company.name
-
-                companySelect.appendChild(option)
-            }
-        }
-    })
 
     // CARS
     fetch(host.local + endpoints.cars, {
@@ -138,7 +112,6 @@
                 title: document.getElementById('order-title').value,
                 routeId: router.value,
                 carId: cars.value,
-                carOwnerCompanyId: carComp.value
             })
         }).then(r => r.json())
         .then(({success, data}) => {

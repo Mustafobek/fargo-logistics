@@ -10,11 +10,6 @@ const schema = new mongoose.Schema({
     carId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'cars'
-        // required: true
-    },
-    carOwnerCompanyId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'car-companies'
     },
     // driver
     driverId: {

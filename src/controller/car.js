@@ -5,7 +5,7 @@ import {Car} from "../models/Car.js";
 
 export const getCars = async (req, res) => {
     try {
-        const cars = await Car.find({})
+        const cars = await Car.find({}).populate('ownerCompanyId').exec()
         return successRes(res, 200, {cars})
     } catch (err) {
         console.log(errorLog(err.message))
@@ -14,7 +14,7 @@ export const getCars = async (req, res) => {
 
 export const getCar = async (req, res) => {
     try {
-        const car = await Car.findOne({_id: req.params.id})
+        const car = await Car.findOne({_id: req.params.id}).populate('ownerCompanyId').exec()
 
         if(!car) return notFound(res)
 

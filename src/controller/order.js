@@ -17,7 +17,14 @@ export const getOrders = async (req, res) => {
     }
 
 
-    const orders = await Order.find(filter).populate(['carId', 'routeId', 'driverId', 'carOwnerCompanyId']).exec();
+    const orders = await Order.find(filter).populate(['routeId', 'driverId',
+      {
+        path : 'carId',
+        populate : {
+          path : 'ownerCompanyId'
+        }
+      }
+    ]).exec();
 
     return successRes(res, 200, { orders });
   } catch (err) {
@@ -27,7 +34,13 @@ export const getOrders = async (req, res) => {
 
 export const getOrder = async (req, res) => {
   try {
-    const order = await Order.findOne({ _id: req.params.id }).populate(['carId', 'routeId', 'driverId', 'carOwnerCompanyId']).exec();
+    const order = await Order.findOne({ _id: req.params.id }).populate(['routeId', 'driverId',
+      {
+        path : 'carId',
+        populate : {
+          path : 'ownerCompanyId'
+        }
+      }]).exec();
 
     if (!order) {
       return notFound(res);

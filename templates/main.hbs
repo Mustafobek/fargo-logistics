@@ -38,8 +38,8 @@
                 </div>
                 <div class="mt-3">
                     <a href="/order/${order._id}" class="link">
-                        <h4 class="heading">${order.carOwnerCompanyId.name}</h4>
-                        <h3 class="heading">${order.title}<br>${order.driverId.fullName ?? order.driverId.username}</h3>
+                        <h4 class="heading">Владелец машин: ${order.carId.ownerCompanyId.name}</h4>
+                        <h3 class="heading">Наименование заказа: ${order.title}<br>Водитель: ${order.driverId.fullName ?? order.driverId.username}</h3>
                     </a>
                     <div class="mt-3">
                         <div class="progress">

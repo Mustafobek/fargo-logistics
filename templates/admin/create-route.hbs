@@ -1,0 +1,158 @@
+{{>header}}
+
+{{>admin/adminNavbar}}
+
+
+
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i"
+      rel="stylesheet">
+<link href="/css/create.css" rel="stylesheet" media="all">
+
+
+<div class="page-wrapper mt-5 bg-gra-03 p-t-45 p-b-50 pt-5 mt-0">
+    <div class="wrapper wrapper--w790">
+        <div class="card card-5">
+            <div class="card-heading">
+                <h2 class="title">Регистрация заказа</h2>
+            </div>
+            <div class="card-body">
+                <form method="POST" id="form">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="name fw-bold">Start city</div>
+                            <div class="value">
+                                <div class="input-group">
+                                    <input id="start-city" class="product-unit input--style-5" required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="routes">
+                        <div class="row route">
+                            <div class="col-sm-12 col-md-9">
+                                <div class="name fw-bold">City</div>
+                                <div class="value">
+                                    <div class="input-group">
+                                        <input class="city input--style-5" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-3">
+                                <div class="name fw-bold">H(t)</div>
+                                <div class="value">
+                                    <div class="input-group">
+                                         <input class="time input--style-5" type="number" required>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="text-end mt-4">
+                        <button class="btn btn-warning" id="rm-btn">- remove</button>
+                        <button class="btn btn-success" id="add-btn">+ add</button>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="name fw-bold">Shortname</div>
+                            <div class="value">
+                                <div class="input-group">
+                                    <input id="shortname" class="input--style-5" required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="m-4">
+
+                    <div>
+                        <button class="btn1 btn--radius-2 btn-success" id="sub-btn"
+                                type="submit">Create</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+    // add btn
+    document.getElementById('add-btn').onclick = ev => {
+        ev.preventDefault()
+
+
+        const div = document.createElement('div')
+        div.className = 'row'
+        div.innerHTML = `
+        <div class="row route">
+            <div class="col-sm-12 col-md-9">
+                <div class="name fw-bold">City</div>
+                <div class="value">
+                    <div class="input-group">
+                        <input class="city input--style-5" required>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-3">
+                <div class="name fw-bold">H(t)</div>
+                <div class="value">
+                    <div class="input-group">
+                        <input class="time input--style-5" type="number" required>
+                    </div>
+                </div>
+            </div>
+        </div>
+        `
+
+        document.getElementById('routes').appendChild(div)
+    }
+
+    // rm btn
+    document.getElementById('rm-btn').onclick = ev => {
+        ev.preventDefault()
+
+        const lastChild = document.getElementById('routes').childNodes[document.getElementById('routes').childNodes.length - 1]
+        document.getElementById('routes').removeChild(lastChild)
+    }
+
+    // create
+    document.getElementById('sub-btn').onclick = ev => {
+        ev.preventDefault()
+
+        const obj = {
+            cities: [
+                {city: document.getElementById('start-city').value}
+            ],
+            periods: [],
+            shortname: document.getElementById('shortname').value
+        }
+
+        const cities = document.querySelectorAll('.city')
+        const periods = document.querySelectorAll('.time')
+
+        for (let i = 0; i < cities.length; i++) {
+            obj.cities.push({
+                city: cities[i].value
+            })
+
+            obj.periods.push({
+                period: periods[i].value
+            })
+        }
+
+        fetch(host.local + endpoints.routes, {
+            ...requestConfig.withToken,
+            method: 'POST',
+            body: JSON.stringify(obj)
+        }).then(r => r.json())
+        .then(({success, data}) => {
+            if(success) {
+                window.location.href = '/ad/main'
+            } else {
+                window.location.reload()
+            }
+        })
+    }
+</script>
