@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="/css/card.css">
 
 <div class="mt-5 mb-3 pt-3 pb-0"></div>
-<div class="container mt-1 mb-3">
+<div class="container mt-1 mb-3" style="margin-left: 0px;">
     <div class="row" id="card-list">
 
     </div>
@@ -19,10 +19,9 @@
             .then(({success, data}) => {
                 if(success) {
                     for (const order of data.orders) {
-                        console.log(data.orders)
                         const cardList = document.getElementById('card-list')
                         const card = document.createElement('div')
-                        card.className = 'col-md-6 col-sm-12 col-xxl-4'
+                        card.className = 'col-md-6 col-sm-12'
                         const progressPercentage = order.updates.length / (order.routeId.cities.length) * 100
 
                         card.innerHTML = `
@@ -36,11 +35,12 @@
                     </div>
                     <div class="badge"> <span>${order.status === 'IN_PROCESS' ? "В пути" : "Завершен"}</span> </div>
                 </div>
-                <div class="mt-5">
+                <div class="mt-3">
                     <a href="/order/${order._id}" class="link">
-                        <h3 class="heading">${order.title}<br>${order.driverId.fullName ?? order.driverId.username}</h3>
+                        <h5 class="heading">Владелец машин: ${order.carId.ownerCompanyId.name}</h5>
+                        <h4 class="heading">Наименование заказа: ${order.title}<br>Водитель: ${order.driverId.fullName ?? order.driverId.username}</h4>
                     </a>
-                    <div class="mt-5">
+                    <div class="mt-3">
                         <div class="progress">
                             <div class="progress-bar" role="progressbar" style="width: ${progressPercentage}%;"></div>
                         </div>
@@ -50,7 +50,6 @@
             </div>
                 `
                         cardList.appendChild(card)
-                        console.log(cardList)
                     }
                 }
             })
