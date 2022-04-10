@@ -17,9 +17,9 @@
                 <div class="badge"> <span id="status"></span> </div>
             </div>
             <div class="mt-3 p-3">
-                <h5 class="heading" id="order-title"><br></h5>
-                <h5 class="heading" id="car-company"><br></h5>
-                <h3><span class="heading" id="driver-fullname"></span></h3>
+                <h5 class="heading">Наименование:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="order-title"></span><br></h5>
+                <h5 class="heading">Владелец машин (компания):&nbsp;&nbsp;&nbsp;<span id="car-company"></span><br></h5>
+                <h3>ФИО:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="heading" id="driver-fullname"></span></h3>
 
                 <div id="route">
                     Маршруты:
@@ -45,7 +45,7 @@
                     <div class="container">
                         <div>
                             <div class="heading text-center p-3">
-                                Updates
+                                Обновления
                             </div>
                         </div>
                         <div class="row" id="updates">
@@ -71,9 +71,9 @@
             document.getElementById('car-number').innerText = order.carId.number + ' - ' + order.carId.model
             document.getElementById('start-time').innerText = moment(order.updates[0].time).format('HH:mm - DD.MM.YYYY')
             document.getElementById('status').innerText = order.status === 'IN_PROCESS' ? "В пути" : "Завершен"
-            document.getElementById('car-company').innerText = 'Владелец машин (компания):\t' + order.carId.ownerCompanyId.name
-            document.getElementById('order-title').innerText = 'Наименование:\t' + order.title
-            document.getElementById('driver-fullname').innerText = 'Ф.И.О:\t' + (order.driverId.fullName ? order.driverId.fullName : order.driverId.username)
+            document.getElementById('car-company').innerText = order.carId.ownerCompanyId.name
+            document.getElementById('order-title').innerText = order.title
+            document.getElementById('driver-fullname').innerText = (order.driverId.fullName ? order.driverId.fullName : order.driverId.username)
             document.getElementById('progress-bar').style.width = order.updates.length / (order.routeId.cities.length) * 100 + '%'
             document.getElementById('current-city').innerText = order.updates[order.updates.length - 1].currentCity
             document.getElementById('next-city').innerText = order.routeId.cities[order.updates.length] ? order.routeId.cities[order.updates.length].city : "FINISH"
@@ -86,7 +86,7 @@
             // DOM FINISH BUTTON DISABLING
             if(order.status !== 'IN_PROCESS') {
                 console.log(nextBtn.innerText)
-                document.getElementById('next-btn').innerText = 'COMPLETED'
+                document.getElementById('next-btn').innerText = 'Завершен'
                 document.getElementById('next-btn').classList.add('disabled')
                 document.getElementById('next-btn').classList.add('btn-warning')
             }
@@ -109,7 +109,7 @@
                 const diffInSecs = Math.abs(new Date(finishTime) - new Date(startTime)) / 1000
                 const finishedIn = convertHMS(diffInSecs)
 
-                div.className = 'col-md-6 col-xl-3'
+                div.className = 'col-md-6 col-xl-4'
                 div.innerHTML = `
                 <div class="card bg-c-green order-card">
                     <div class="card-block">
