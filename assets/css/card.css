@@ -2,7 +2,7 @@
 .card {
     border: none;
     border-radius: 10px;
-    background-color: #FAEEE7;
+    background-color: #F5F5F5;
 }
 
 .c-details span {
@@ -39,7 +39,7 @@
 }
 
 .progress div {
-    background-color: red
+    background-color: #6BCB77;
 }
 
 .text1 {

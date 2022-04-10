@@ -17,9 +17,9 @@
                 <div class="badge"> <span id="status"></span> </div>
             </div>
             <div class="mt-3 p-3">
-                <h5 class="heading">Наименование:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="order-title"></span><br></h5>
-                <h5 class="heading">Владелец машин (компания):&nbsp;&nbsp;&nbsp;<span id="car-company"></span><br></h5>
-                <h3>ФИО:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="heading" id="driver-fullname"></span></h3>
+                <h5 class="heading">Наименование:<span class="ps-2" id="order-title"></span><br></h5>
+                <h5 class="heading">Владелец машин (компания):<span class="ps-2" id="car-company"></span><br></h5>
+                <h4>ФИО:<span class="ps-3" id="driver-fullname"></span></h4>
 
                 <div id="route">
                     Маршруты:
@@ -85,7 +85,6 @@
 
             // DOM FINISH BUTTON DISABLING
             if(order.status !== 'IN_PROCESS') {
-                console.log(nextBtn.innerText)
                 document.getElementById('next-btn').innerText = 'Завершен'
                 document.getElementById('next-btn').classList.add('disabled')
                 document.getElementById('next-btn').classList.add('btn-warning')
