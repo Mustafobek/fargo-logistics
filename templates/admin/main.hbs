@@ -6,4 +6,20 @@
 
 
 <script>
+    // CAR COMPANY
+    fetch(host.local + endpoints.carCompany, {
+        ...requestConfig.withToken,
+        method: 'GET'
+    }).then(r => r.json())
+    .then(({success, data}) => {
+        console.log(success, data)
+    })
+
+    // CAR
+    // fetch()
+    //
+    // // ROUTE
+    // fetch()
+
+    // USER
 </script>
