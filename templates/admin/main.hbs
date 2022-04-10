@@ -3,6 +3,85 @@
 {{>admin/adminNavbar}}
 
 
+<div class="container mt-3 pt-3">
+    <div class="row">
+        Пользователи
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Имя пользователя</th>
+                <th scope="col">ФИО</th>
+                <th scope="col">Роль</th>
+            </tr>
+            </thead>
+            <tbody id="users">
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<div class="container mt-3 pt-3">
+    <div class="row">
+        Компания(владелец) машин
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Наименование</th>
+            </tr>
+            </thead>
+            <tbody id="companies">
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+<div class="container mt-3 pt-3">
+    <div class="row">
+        Машины
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Номер</th>
+                <th scope="col">Модель</th>
+                <th scope="col">Владелец</th>
+            </tr>
+            </thead>
+            <tbody id="cars">
+<!--            CARS -->
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+
+<div class="container mt-3 pt-3">
+    <div class="row">
+        Маршруты
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Краткое Наименование</th>
+                    <th scope="col">Общее время</th>
+                </tr>
+            </thead>
+            <tbody id="routes">
+<!-- ROUTES -->
+            </tbody>
+        </table>
+    </div>
+</div>
+
 
 
 <script>
@@ -11,15 +90,88 @@
         ...requestConfig.withToken,
         method: 'GET'
     }).then(r => r.json())
-    .then(({success, data}) => {
-        console.log(success, data)
+    .then(({success, data: {companies}}) => {
+        if(success) {
+            const carCompaniesTbody = document.getElementById('companies')
+
+            companies.map((c, i) => {
+                const tr = document.createElement('tr')
+                tr.innerHTML = `
+                    <th scope="row">${i + 1}</th>
+                    <td>${c.name}</td>
+                `
+                carCompaniesTbody.appendChild(tr)
+            })
+        }
     })
 
     // CAR
-    // fetch()
-    //
-    // // ROUTE
-    // fetch()
+    fetch(host.local + endpoints.cars, {
+        ...requestConfig.withToken,
+        method: 'GET'
+    }).then(r => r.json())
+    .then(({success, data: {cars}}) => {
+        if(success) {
+            const carsTbody = document.getElementById('cars')
+
+            cars.map((c, i) => {
+                const tr = document.createElement('tr')
+                tr.innerHTML = `
+                <th scope="row">${i + 1}</th>
+                <td>${c.number}</td>
+                <td>${c.model}</td>
+                <td>${c.ownerCompanyId.name}</td>
+                `
+                carsTbody.appendChild(tr)
+            })
+        }
+    })
+
+
+    // ROUTE
+    fetch(host.local + endpoints.routes, {
+        ...requestConfig.withToken,
+        method: 'GET'
+    }).then(r => r.json())
+    .then(({success, data: {routes}}) => {
+        if(success) {
+            const routesTbody = document.getElementById('routes')
+            let totalTime = 0
+
+            routes.map((r, i) => {
+                const tr = document.createElement('tr')
+                for (const t of r.periods) {
+                    totalTime += t.period
+                }
+                tr.innerHTML = `
+                <th scope="row">${i + 1}</th>
+                <td>${r.shortname}</td>
+                <td>${totalTime} часов</td>
+                `
+                routesTbody.appendChild(tr)
+            })
+        }
+    })
 
     // USER
+    fetch(host.local + endpoints.users, {
+        ...requestConfig.withToken,
+        method: 'GET'
+    }).then(r => r.json())
+    .then(({success, data: {users}}) => {
+        if(success) {
+            const userTbody = document.getElementById('users')
+
+            users.map((u, i) => {
+                const tr = document.createElement('tr')
+                tr.innerHTML = `
+                    <th scope="row">${i + 1}</th>
+                    <td>${u.username}</td>
+                    <td>${u.fullName}</td>
+                    <td>${(u.role === 'DRIVER') ? 'Водитель' : (u.role === 'MANAGER' ? 'Менеджер' : 'Отчетный')}</td>
+                `
+                userTbody.appendChild(tr)
+            })
+        }
+    })
 </script>

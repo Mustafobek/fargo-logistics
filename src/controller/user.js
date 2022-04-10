@@ -1,6 +1,6 @@
 import {errorLog} from "../utils/logger.js";
 import {errorRes, notFound, successRes} from "../utils/response.js";
-import {User} from "../models/User.js";
+import {User, USER_ROLE} from "../models/User.js";
 import bcrypt from 'bcryptjs'
 import {generateToken} from "../utils/authToken.js";
 
@@ -54,6 +54,10 @@ export const register = async (req, res) => {
 
 export const getUser = async (req, res) => {
     try {
+        if(req.user.role !== USER_ROLE.admin) {
+            return errorRes(res, {message: 'Not enough rights'})
+        }
+
         const user = await User.findOne({_id: req.params.id})
         if(!user) return notFound(res)
 
@@ -65,7 +69,15 @@ export const getUser = async (req, res) => {
 
 export const getUsers = async (req, res) => {
     try {
-        const filter = {}
+        if(req.user.role !== USER_ROLE.admin) {
+            return errorRes(res, {message: 'Not enough rights'})
+        }
+
+        const filter = {
+            role: {
+                $ne: USER_ROLE.admin
+            }
+        }
 
         if (req.query.role) {
             filter.role = req.query.role
