@@ -4,7 +4,7 @@
 
 <link rel="stylesheet" href="/css/card.css">
 
-
+<div id="card-list"></div>
 
 <script>
     fetch(host.local + '/api/orders?status=IN_PROCESS', {
@@ -13,8 +13,8 @@
     }).then(r => r.json())
     .then(({success, data}) => {
         if(success) {
+            const cardList = document.getElementById('card-list')
             for (const order of data.orders) {
-                const cardList = document.getElementById('card-list')
                 const card = document.createElement('div')
                 card.className = 'col-md-6 col-sm-12'
                 const progressPercentage = order.updates.length / (order.routeId.cities.length) * 100
