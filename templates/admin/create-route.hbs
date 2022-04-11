@@ -13,13 +13,13 @@
     <div class="wrapper wrapper--w790">
         <div class="card card-5">
             <div class="card-heading">
-                <h2 class="title">Регистрация заказа</h2>
+                <h2 class="title">Регистрация маршрута</h2>
             </div>
             <div class="card-body">
                 <form method="POST" id="form">
                     <div class="row">
                         <div class="col-sm-12">
-                            <div class="name fw-bold">Start city</div>
+                            <div class="name fw-bold">Старт город</div>
                             <div class="value">
                                 <div class="input-group">
                                     <input id="start-city" class="product-unit input--style-5" required>
@@ -30,7 +30,7 @@
                     <div id="routes">
                         <div class="row route">
                             <div class="col-sm-12 col-md-9">
-                                <div class="name fw-bold">City</div>
+                                <div class="name fw-bold">Город</div>
                                 <div class="value">
                                     <div class="input-group">
                                         <input class="city input--style-5" required>
@@ -38,7 +38,7 @@
                                 </div>
                             </div>
                             <div class="col-sm-12 col-md-3">
-                                <div class="name fw-bold">H(t)</div>
+                                <div class="name fw-bold">Время поездки</div>
                                 <div class="value">
                                     <div class="input-group">
                                          <input class="time input--style-5" type="number" required>
@@ -49,13 +49,13 @@
                     </div>
 
                     <div class="text-end mt-4">
-                        <button class="btn btn-warning" id="rm-btn">- remove</button>
-                        <button class="btn btn-success" id="add-btn">+ add</button>
+                        <button class="btn btn-warning" id="rm-btn">- удалить</button>
+                        <button class="btn btn-success" id="add-btn">+ добавить</button>
                     </div>
 
                     <div class="row">
                         <div class="col-sm-12">
-                            <div class="name fw-bold">Shortname</div>
+                            <div class="name fw-bold">Краткое наименование</div>
                             <div class="value">
                                 <div class="input-group">
                                     <input id="shortname" class="input--style-5" required>
@@ -88,7 +88,7 @@
         div.innerHTML = `
         <div class="row route">
             <div class="col-sm-12 col-md-9">
-                <div class="name fw-bold">City</div>
+                <div class="name fw-bold">Город</div>
                 <div class="value">
                     <div class="input-group">
                         <input class="city input--style-5" required>
@@ -96,7 +96,7 @@
                 </div>
             </div>
             <div class="col-sm-12 col-md-3">
-                <div class="name fw-bold">H(t)</div>
+                <div class="name fw-bold">Время поездки</div>
                 <div class="value">
                     <div class="input-group">
                         <input class="time input--style-5" type="number" required>
